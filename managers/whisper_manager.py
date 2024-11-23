@@ -3,7 +3,8 @@ import torch
 import whisper
 import whisper.transcribe
 
-from managers.file_manager import FileManager 
+from managers.file_manager import FileManager
+from utils.util import write_srt 
 
 class WhisperManager:
     def __init__(self, model_name:str, path_root:str=None):
@@ -21,7 +22,7 @@ class WhisperManager:
 
     def generate(self, fileManager: FileManager):
         for f in fileManager.directory.files:
-            
+            print(f'Generate subtitle for {f.name}\n')
             srt_file = os.path.join(fileManager.directory.name, str.replace(f.name, f.extension, 'srt'))
 
             if os.path.isfile(srt_file):
@@ -29,10 +30,18 @@ class WhisperManager:
                 continue
             
             dst = os.path.join(fileManager.directory.name, f.name)
-            self.model.transcribe(
+            result = self.model.transcribe(
                 dst, 
                 language=self.language, 
                 fp16=self.gpu_enable, 
                 temperature=self.temperature, 
                 verbose=self.verbose
             )
+
+            # save SRT
+            with open(srt_file, "w", encoding="utf-8") as srt:
+                write_srt(result["segments"], file=srt)
+
+            print('generated sucessfully!!!\n')
+
+        print('All subtitle generated.')
