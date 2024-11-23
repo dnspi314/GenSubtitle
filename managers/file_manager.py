@@ -1,5 +1,6 @@
 import os
 
+from exceptions.directory_not_found_exception import DirectoryNotFoundException
 from models.models import Directory, File
 
 
@@ -11,7 +12,7 @@ class FileManager:
 
     def readFile(self):
         if not os.path.isdir(self.path_dir):
-            raise Exception(f'Directory {self.path_dir} not found!!!')
+            raise DirectoryNotFoundException(f'Directory {self.path_dir} not found!!!')
         
         self.directory = Directory(self.path_dir)
 
