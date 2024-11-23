@@ -10,7 +10,7 @@ class FileManager:
         self.directory = None
         self.file_extensions = file_extensions
 
-    def readFile(self):
+    def scanDir(self):
         if not os.path.isdir(self.path_dir):
             raise DirectoryNotFoundException(f'Directory {self.path_dir} not found!!!')
         
@@ -25,12 +25,12 @@ class FileManager:
 
         return self
     
-    def desc(self):
+    def descList(self):
         self.list = sorted(self.list, reverse=True)
 
         return self
     
-    def asc(self):
+    def ascList(self):
         self.list = sorted(self.list)
 
         return self

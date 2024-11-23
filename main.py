@@ -6,7 +6,7 @@ from managers.whisper_manager import WhisperManager
 try:
     fileManager = FileManager('C:\\Users\\danil\\Videos\\zero-hero-reflection-net\\zero-hero-reflection-net', ['mp4'])
 
-    fileManager.readFile()
+    fileManager.scanDir()
 
     download_root = os.path.join(os.getcwd(), 'whisper_cache')
 
@@ -18,4 +18,4 @@ except DirectoryNotFoundException as error:
     print(error)
 
 except:  # noqa: E722
-    print('Something wrong happen')
+    print('Something wrong happen!')
