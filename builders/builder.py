@@ -7,7 +7,7 @@ class EnvironmentBuilder:
         self.args = args
         self.configuration = {}
 
-    def set_filepath(self):
+    def load_args(self):
         if len(self.args) != 2:
             raise EnvironmentException("Por favor verifique se o argumento passado via linha de commando foi passado corretamente. Deve ter somente 1 argumento.")
         
