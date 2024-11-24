@@ -5,7 +5,7 @@ from models.models import Directory, File
 
 
 class FileManager:
-    def __init__(self, path_dir, include_extensions):
+    def __init__(self, path_dir, *include_extensions):
         self.path_dir = path_dir
         self.directory = None
         self.include_extensions = include_extensions

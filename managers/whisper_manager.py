@@ -8,13 +8,13 @@ from managers.file_manager import FileManager
 from utils.util import write_srt 
 
 class WhisperManager:
-    def __init__(self, model_name:str, configuration:list, path_root:str=None):
-        self.language = configuration["LANGUAGE"]
-        self.temperature = float(configuration["TEMPERATURE"])
-        self.verbose = json.loads(configuration["VERBOSITY"].lower())
+    def __init__(self, configuration:list, path_root:str=None):
+        self.language = configuration['LANGUAGE']
+        self.temperature = float(configuration['TEMPERATURE'])
+        self.verbose = json.loads(configuration['VERBOSITY'].lower())
         self.gpu_enable = torch.cuda.is_available()
-        device = "cuda" if self.gpu_enable else "cpu"
-        self.model = whisper.load_model(model_name, download_root=path_root, device=device)
+        device = 'cuda' if self.gpu_enable else 'cpu'
+        self.model = whisper.load_model(configuration['MODEL_NAME'], download_root=path_root, device=device)
 
 
     def add_temperature(self, temperature:float):
@@ -24,11 +24,11 @@ class WhisperManager:
     def generate(self, fileManager: FileManager):
         for f in fileManager.directory.files:
             print('*' * 20)
-            print(f'Generate subtitle for {f.name}')
+            print(f'Gerando legenda {f.name}')
             srt_file = os.path.join(fileManager.directory.name, str.replace(f.name, f.extension, 'srt'))
 
             if os.path.isfile(srt_file):
-                print(f'File {srt_file} already generated.')
+                print(f'Arquivos {srt_file} já foi gerado.')
                 continue
             
             dst = os.path.join(fileManager.directory.name, f.name)
@@ -44,7 +44,7 @@ class WhisperManager:
             with open(srt_file, "w", encoding="utf-8") as srt:
                 write_srt(result["segments"], file=srt)
 
-            print('generated sucessfully!!!\n')
+            print('Legenda gerada com sucesso!!!\n')
             print('*' * 20)
 
-        print('All subtitle generated.')
+        print('Finalizado.')
