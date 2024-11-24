@@ -36,7 +36,8 @@ class WhisperManager:
                 language=self.language, 
                 fp16=self.gpu_enable, 
                 temperature=self.temperature, 
-                verbose=self.verbose
+                verbose=self.verbose,
+                max_initial_timestamp=0
             )
 
             # save SRT
