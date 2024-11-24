@@ -14,12 +14,11 @@ class WhisperManager:
         self.verbose = json.loads(configuration['VERBOSITY'].lower())
         self.gpu_enable = torch.cuda.is_available()
         device = 'cuda' if self.gpu_enable else 'cpu'
-        self.model = whisper.load_model(configuration['MODEL_NAME'], download_root=path_root, device=device)
-
-
-    def add_temperature(self, temperature:float):
-        self.temperature = temperature
-
+        self.model = whisper.load_model(
+            configuration['MODEL_NAME'], 
+            download_root=path_root, 
+            device=device
+        )
 
     def generate(self, fileManager: FileManager):
         for f in fileManager.directory.files:
