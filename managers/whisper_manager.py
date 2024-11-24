@@ -16,7 +16,7 @@ class WhisperManager:
         self.model = whisper.load_model(model_name, download_root=path_root, device=device)
 
 
-    def addTemperature(self, temperature:float):
+    def add_temperature(self, temperature:float):
         self.temperature = temperature
 
 

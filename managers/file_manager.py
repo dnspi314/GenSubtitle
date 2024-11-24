@@ -1,6 +1,6 @@
 import os
 
-from exceptions.directory_not_found_exception import DirectoryNotFoundException
+from exceptions.exception import DirectoryNotFoundException
 from models.models import Directory, File
 
 
@@ -10,7 +10,7 @@ class FileManager:
         self.directory = None
         self.file_extensions = file_extensions
 
-    def scanDir(self):
+    def scan_dir(self):
         if not os.path.isdir(self.path_dir):
             raise DirectoryNotFoundException(f'Directory {self.path_dir} not found!!!')
         
@@ -25,12 +25,12 @@ class FileManager:
 
         return self
     
-    def descList(self):
+    def files_order_desc(self):
         self.list = sorted(self.list, reverse=True)
 
         return self
     
-    def ascList(self):
+    def files_order_asc(self):
         self.list = sorted(self.list)
 
         return self

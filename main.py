@@ -1,12 +1,17 @@
 import os
-from exceptions.directory_not_found_exception import DirectoryNotFoundException
+import sys
+from builders.builder import EnvironmentBuilder
 from managers.file_manager import FileManager
 from managers.whisper_manager import WhisperManager
 
 try:
-    fileManager = FileManager('C:\\Users\\danil\\Videos\\zero-hero-reflection-net\\zero-hero-reflection-net', ['mp4'])
+    environment = EnvironmentBuilder(sys.argv)
 
-    fileManager.scanDir()
+    environment.add_filepath()
+
+    fileManager = FileManager(environment.configuration["filepath"], ['mp4'])
+
+    fileManager.scan_dir()
 
     download_root = os.path.join(os.getcwd(), 'whisper_cache')
 
@@ -14,8 +19,5 @@ try:
 
     genSub.generate(fileManager)
 
-except DirectoryNotFoundException as error:
-    print(error)
-
-except:  # noqa: E722
-    print('Something wrong happen!')
+except Exception as error:
+    print(f'Error occurred: {error}')
