@@ -5,7 +5,7 @@ from managers.whisper_manager import WhisperManager
 
 try:
     environment = EnvironmentBuilder(sys.argv)
-    environment.add_filepath().load_configuration()
+    environment.add_filepath().load_configuration().build()
 
     fileManager = FileManager(environment.configuration["FILEPATH"], ['mp4'])
     fileManager.scan_dir()

@@ -1,3 +1,4 @@
+import json
 import os
 import torch
 import whisper
@@ -11,7 +12,7 @@ class WhisperManager:
     def __init__(self, model_name:str, environment:EnvironmentBuilder, path_root:str=None):
         self.language = environment.configuration["LANGUAGE"]
         self.temperature = float(environment.configuration["TEMPERATURE"])
-        self.verbose = bool(environment.configuration["VERBOSITY"])
+        self.verbose = json.loads(environment.configuration["VERBOSITY"].lower())
         self.gpu_enable = torch.cuda.is_available()
         device = "cuda" if self.gpu_enable else "cpu"
         self.model = whisper.load_model(model_name, download_root=path_root, device=device)
@@ -23,7 +24,8 @@ class WhisperManager:
 
     def generate(self, fileManager: FileManager):
         for f in fileManager.directory.files:
-            print(f'Generate subtitle for {f.name}\n')
+            print('*' * 20)
+            print(f'Generate subtitle for {f.name}')
             srt_file = os.path.join(fileManager.directory.name, str.replace(f.name, f.extension, 'srt'))
 
             if os.path.isfile(srt_file):
@@ -44,5 +46,6 @@ class WhisperManager:
                 write_srt(result["segments"], file=srt)
 
             print('generated sucessfully!!!\n')
+            print('*' * 20)
 
         print('All subtitle generated.')
