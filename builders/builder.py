@@ -1,15 +1,15 @@
 import os
 from dotenv import dotenv_values
-from exceptions.exception import ConfigurationEnvironmentInvalidException
+from exceptions.exception import EnvironmentException
 
 class EnvironmentBuilder:
     def __init__(self, args:list):
         self.args = args
         self.configuration = {}
 
-    def add_filepath(self):
+    def set_filepath(self):
         if len(self.args) != 2:
-            raise ConfigurationEnvironmentInvalidException("Por favor verifique se o argumento passado via linha de commando foi passado corretamente. Deve ter somente 1 argumento.")
+            raise EnvironmentException("Por favor verifique se o argumento passado via linha de commando foi passado corretamente. Deve ter somente 1 argumento.")
         
         self.configuration["FILEPATH"] = self.args[1]
 
@@ -28,7 +28,7 @@ class EnvironmentBuilder:
     
     def build(self):
         if len(self.configuration) == 0:
-            raise ConfigurationEnvironmentInvalidException("Você precisa contruir as configurações.")
+            raise EnvironmentException("Você precisa contruir as configurações.")
         
         return self.configuration
     
