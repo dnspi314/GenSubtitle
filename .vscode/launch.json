@@ -8,10 +8,10 @@
             "name": "Python: main",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "main.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["C:\\Users\\danil\\Videos\\zero-hero-reflection-net\\zero-hero-reflection-net"]
+            "args": ["C:\\Users\\danil\\Videos\\videotest"]
         }
     ]
 }
