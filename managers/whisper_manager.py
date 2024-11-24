@@ -3,14 +3,15 @@ import torch
 import whisper
 import whisper.transcribe
 
+from builders.builder import EnvironmentBuilder
 from managers.file_manager import FileManager
 from utils.util import write_srt 
 
 class WhisperManager:
-    def __init__(self, model_name:str, path_root:str=None):
-        self.language = 'English'
-        self.temperature = 0
-        self.verbose = True
+    def __init__(self, model_name:str, environment:EnvironmentBuilder, path_root:str=None):
+        self.language = environment.configuration["LANGUAGE"]
+        self.temperature = float(environment.configuration["TEMPERATURE"])
+        self.verbose = bool(environment.configuration["VERBOSITY"])
         self.gpu_enable = torch.cuda.is_available()
         device = "cuda" if self.gpu_enable else "cpu"
         self.model = whisper.load_model(model_name, download_root=path_root, device=device)
